@@ -21,10 +21,10 @@ var GameLayer = cc.LayerColor.extend({
    onKeyDown: function( e ) {
     switch( e ) {
         case cc.KEY.left:
-            this.player.vx -=1;
+            this.player.Left();
             break;
         case cc.KEY.right:
-            this.player.vx +=1;
+            this.player.Right();
             break;
         }
     },
@@ -35,13 +35,11 @@ var GameLayer = cc.LayerColor.extend({
 
         this.normalFloor = new NormalFloor();
         this.addChild( this.normalFloor );
-        this.normalFloor.setPosition( new cc.Point( screenWidth / 2, 100 ) );
+        this.normalFloor.setPosition( new cc.Point( screenWidth / 2, 50 ) );
+        this.normalFloor.getPlayer(this.player);
         this.normalFloor.scheduleUpdate();
     },
     update: function() {
-        if ( this.player.closeTo( this.normalFloor ) ) {
-            this.player.jump();
-        }
     }
 
 });
