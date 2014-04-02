@@ -6,7 +6,7 @@ var NormalFloor = cc.Sprite.extend({
     closeTo: function( obj ) {
 		var myPos = this.getPosition();
 		var oPos = obj.getPosition();
-	  	return (( Math.abs( myPos.x - oPos.x ) <= 30 ) && ( myPos.y - oPos.y  > -17 ));
+	  	return (( Math.abs( myPos.x - oPos.x ) <= 30 ) && ( Math.abs(oPos.y - myPos.y)  <= 17 ));
     },
     update: function( dt ) {
         if ( this.closeTo( this.player ) ) {

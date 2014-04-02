@@ -12,8 +12,8 @@ var GameLayer = cc.LayerColor.extend({
         this.player.scheduleUpdate();
 
         this.setKeyboardEnabled( true );
-        this.state = GameLayer.STATES.FRONT;
         this.createNormalFloor();
+        this.randomNormalFloor();
         this.scheduleUpdate();
         return true;
     },
@@ -39,15 +39,18 @@ var GameLayer = cc.LayerColor.extend({
         this.normalFloor.getPlayer(this.player);
         this.normalFloor.scheduleUpdate();
     },
+    randomNormalFloor: function() {
+
+        this.normalFloor = new NormalFloor();
+        this.addChild( this.normalFloor );
+        this.normalFloor.setPosition( new cc.Point( Math.random()*screenWidth, Math.random()*screenHeight*(2/3) ));
+        this.normalFloor.getPlayer(this.player);
+        this.normalFloor.scheduleUpdate();
+    },
     update: function() {
     }
 
 });
-GameLayer.STATES = {
-    FRONT: 1,
-    STARTED: 2,
-    DEAD: 3
-};
 
 var StartScene = cc.Scene.extend({
     onEnter: function() {
