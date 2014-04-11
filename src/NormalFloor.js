@@ -1,7 +1,12 @@
 var NormalFloor = cc.Sprite.extend({
-    ctor:function(){
+	tor:function(){
         this._super();
         this.initWithFile('images/normalFloor.png');
+    },
+    ctor:function(player){
+        this._super();
+        this.initWithFile('images/normalFloor.png');
+        this.getPlayer(player);
     },
     closeTo: function( obj ) {
 		var myPos = this.getPosition();

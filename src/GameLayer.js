@@ -33,10 +33,9 @@ var GameLayer = cc.LayerColor.extend({
     },
     createNormalFloor: function(point) {
 
-        this.normalFloor = new NormalFloor();
-        this.addChild( this.normalFloor );
-        this.normalFloor.setPosition( point );
-        this.normalFloor.getPlayer(this.player);
+        this.normalFloor = new NormalFloor(this.player);
+        this.addChild(this.normalFloor);
+        this.normalFloor.setPosition(point);
         this.normalFloor.scheduleUpdate();
     },
     randomNormalFloor: function() {
