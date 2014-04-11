@@ -12,7 +12,7 @@ var GameLayer = cc.LayerColor.extend({
         this.player.scheduleUpdate();
 
         this.setKeyboardEnabled( true );
-        this.createNormalFloor();
+        this.createNormalFloor(new cc.Point( screenWidth / 2, 50 ));
         this.randomNormalFloor();
         this.scheduleUpdate();
         return true;
@@ -31,25 +31,17 @@ var GameLayer = cc.LayerColor.extend({
     onKeyUp: function( e ) {
     this.player.vx = 0;
     },
-    createNormalFloor: function() {
+    createNormalFloor: function(point) {
 
         this.normalFloor = new NormalFloor();
         this.addChild( this.normalFloor );
-        this.normalFloor.setPosition( new cc.Point( screenWidth / 2, 50 ) );
+        this.normalFloor.setPosition( point );
         this.normalFloor.getPlayer(this.player);
         this.normalFloor.scheduleUpdate();
     },
     randomNormalFloor: function() {
-
-        this.normalFloor = new NormalFloor();
-        this.addChild( this.normalFloor );
-        this.normalFloor.setPosition( new cc.Point( Math.random()*screenWidth, Math.random()*screenHeight*(2/3) ));
-        this.normalFloor.getPlayer(this.player);
-        this.normalFloor.scheduleUpdate();
-    },
-    update: function() {
+        this.createNormalFloor( new cc.Point( Math.random()*screenWidth, Math.random()*screenHeight*(2/3) ));
     }
-
 });
 
 var StartScene = cc.Scene.extend({
