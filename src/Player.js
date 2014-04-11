@@ -22,8 +22,8 @@ var Player = cc.Sprite.extend({
     	}
     	var pos = this.getPosition();
 	    this.setPosition( new cc.Point( pos.x + this.vx, pos.y + this.vy ) );
-	    if (this.vy>-15)
-	    	this.vy +=  -0.5;
+	    if (this.vy>-10)
+	    	this.vy +=  Player.G;
     },
     jump: function() {
     	if(this.vy > 0) return ;
@@ -43,6 +43,6 @@ var Player = cc.Sprite.extend({
     	this.vx++;
     }
 });
-Player.G = -1;
+Player.G = -0.5;
 Player.STARTING_VELOCITY = 15;
 Player.JUMPING_VELOCITY = 15;
