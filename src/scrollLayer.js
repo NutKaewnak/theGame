@@ -4,6 +4,7 @@ var scrollLayer = cc.LayerColor.extend({
         scrollLayer.player = obj;
         this.createNormalFloor(new cc.Point( screenWidth / 2, 60 ));
         this.randomNormalFloor();
+        
         this.scheduleUpdate();
         return true;
     },
@@ -20,12 +21,10 @@ var scrollLayer = cc.LayerColor.extend({
         	Math.random()*screenWidth,LastFloorHeigh+(Math.random()*300)));
     },
     update: function(dt){
-    	if(scrollLayer.player.onTheMid){
-			if (this.vy>Player.FallLimit)
-		    	this.vy +=  Player.G;
-	    	this.setPosition( new cc.Point( 0, this.getPosition().y+this.vy ) );
+    	if(scrollLayer.player.onTheMid()){
+    		console.log("onMid"+scrollLayer.player.pos.y);
+	    	this.setPosition( new cc.Point( 0, this.getPosition().y-scrollLayer.player.vy ) );
     	}
-    	else this.vy = 0 ;
 
     	if (this.LastFloorHeigh < scrollLayer.player.pos.y+400)
     		randomNormalFloor();

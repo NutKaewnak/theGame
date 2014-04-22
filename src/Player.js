@@ -30,10 +30,7 @@ var Player = cc.Sprite.extend({
 
     },
     onTheMid: function(){
-    	if(this.pos.y >=300 && this.vy>0){
-    		console.log("onMid"+this.pos.y);
-    		return true
-    	}
+    	return (this.pos.y >=300 && this.vy>0);
     },
     jump: function() {
     	if(this.vy > 0) return ;
