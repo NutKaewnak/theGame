@@ -4,7 +4,12 @@ var LastFloorHeigh = 0;
   
 var GameLayer = cc.LayerColor.extend({
     init: function() {
-        this._super( new cc.Color4B( 127, 127, 127, 255 ) );
+        this._super();
+        var background = cc.Sprite.create('images/story-fairy-space-mystic.jpg');
+        background.setAnchorPoint( cc.p( 0.5, 0.5 ));
+        background.setPosition( cc.p( 400, 300) );
+        this.addChild(background);
+
         this.setPosition( new cc.Point( 0, 0 ) );
         this.player = new Player();
         this.player.setPosition( new cc.Point( screenWidth / 2, 0 ) );

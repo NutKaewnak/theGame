@@ -14,7 +14,7 @@ var NormalFloor = cc.Sprite.extend({
         	this.setPosition(this.myPos.x,this.myPos.y-this.player.vy);
         if ( this.closeTo( this.player ) )
             this.player.jump();
-        
+
     },
     getPlayer: function( obj ){
     	this.player = obj;
