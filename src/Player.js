@@ -21,10 +21,15 @@ var Player = cc.Sprite.extend({
     	if(this.vx>0){
     		this.vx++;
     	}
-	    this.setPosition( new cc.Point( this.pos.x + this.vx, this.pos.y + this.vy ) );
 	    if (this.vy>Player.FallLimit)
 	    	this.vy +=  Player.G;
+	    if(this.onTheMid())
+	    	this.setPosition( new cc.Point( this.pos.x + this.vx, this.pos.y ) );
+	    this.setPosition( new cc.Point( this.pos.x + this.vx, this.pos.y + this.vy ) );
 
+    },
+    onTheMid: function(){
+    	return (this.pos.y >=400);
     },
     jump: function() {
     	if(this.vy > 0) return ;
@@ -40,4 +45,4 @@ var Player = cc.Sprite.extend({
 });
 Player.G = -0.5;
 Player.JUMPING_VELOCITY = 17.5;
-Player.FallLimit = -10;
+Player.FallLimit = -15;
