@@ -25,11 +25,15 @@ var Player = cc.Sprite.extend({
 	    	this.vy +=  Player.G;
 	    if(this.onTheMid())
 	    	this.setPosition( new cc.Point( this.pos.x + this.vx, this.pos.y ) );
-	    this.setPosition( new cc.Point( this.pos.x + this.vx, this.pos.y + this.vy ) );
+	    else
+	    	this.setPosition( new cc.Point( this.pos.x + this.vx, this.pos.y + this.vy ) );
 
     },
     onTheMid: function(){
-    	return (this.pos.y >=400);
+    	if(this.pos.y >=300 && this.vy>0){
+    		console.log("onMid"+this.pos.y);
+    		return true
+    	}
     },
     jump: function() {
     	if(this.vy > 0) return ;

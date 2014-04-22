@@ -12,8 +12,8 @@ var GameLayer = cc.LayerColor.extend({
         this.player.scheduleUpdate();
 
         this.setKeyboardEnabled( true );
-        this.scroll = new scrollLayer(this.player);
-        this.scroll.init();
+        this.scroll = new scrollLayer();
+        this.scroll.init(this.player);
         this.addChild(this.scroll);
 
         this.scheduleUpdate();
@@ -40,6 +40,6 @@ var StartScene = cc.Scene.extend({
         this._super();
         var layer = new GameLayer();
         layer.init();
-        this.addChild( layer );       
+        this.addChild( layer );
     }
 });
