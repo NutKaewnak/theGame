@@ -6,7 +6,7 @@ var Player = cc.Sprite.extend({
 		animation.addSpriteFrameWithFile( 'images/dot1.png' );
 		animation.addSpriteFrameWithFile( 'images/dot.png' );
 		animation.addSpriteFrameWithFile( 'images/dot3.png' );
-		animation.setDelayPerUnit( 0.2 );
+		animation.setDelayPerUnit( 0.75 );
 		var movingAction = cc.Animate.create( animation );
 		this.runAction( movingAction );
 		this.vy = 17;
@@ -21,6 +21,10 @@ var Player = cc.Sprite.extend({
     	if(this.vx>0){
     		this.vx++;
     	}
+
+    	if (this.pos.x >800) this.setPosition(0,this.pos.y);
+    	else if (this.pos.x < 0) this.setPosition(800,this.pos.y);
+
 	    if (this.vy>Player.FallLimit)
 	    	this.vy +=  Player.G;
 	    if(this.onTheMid())
@@ -30,7 +34,7 @@ var Player = cc.Sprite.extend({
 
     },
     onTheMid: function(){
-    	return (this.pos.y >=300 && this.vy>0);
+    	return (this.pos.y >=350 && this.vy>0);
     },
     jump: function() {
     	if(this.vy > 0) return ;
@@ -45,5 +49,5 @@ var Player = cc.Sprite.extend({
     }
 });
 Player.G = -0.5;
-Player.JUMPING_VELOCITY = 17.5;
+Player.JUMPING_VELOCITY = 15;
 Player.FallLimit = -15;

@@ -13,13 +13,13 @@ var GameLayer = cc.LayerColor.extend({
         this.setPosition( new cc.Point( 0, 0 ) );
         this.player = new Player();
         this.player.setPosition( new cc.Point( screenWidth / 2, 0 ) );
-        this.addChild( this.player,1 );
+        this.addChild( this.player,2 );
         this.player.scheduleUpdate();
 
         this.setKeyboardEnabled( true );
         this.scroll = new scrollLayer();
         this.scroll.init(this.player);
-        this.addChild(this.scroll);
+        this.addChild(this.scroll,1);
 
         this.scheduleUpdate();
         return true;

@@ -1,7 +1,7 @@
 var scrollLayer = cc.LayerColor.extend({
 	init:function(obj){
         this.setPosition( new cc.Point( 0, 0 ) );
-        scrollLayer.player = obj;
+        this.player = obj;
         this.LastFloorHeigh = 0;
         this.createNormalFloor(new cc.Point( screenWidth / 2, 60 ));
         this.randomNormalFloor();
@@ -11,27 +11,26 @@ var scrollLayer = cc.LayerColor.extend({
     },
     createNormalFloor: function(point) {
 
-        this.normalFloor = new NormalFloor(scrollLayer.player);
+        this.normalFloor = new NormalFloor(this);
         this.addChild(this.normalFloor);
         this.normalFloor.setPosition(point);
         this.normalFloor.scheduleUpdate();
-        this.LastFloorHeigh = point.y;
     },
     randomNormalFloor: function() {
         this.createNormalFloor(new cc.Point( 
-        	Math.random()*screenWidth,LastFloorHeigh+(Math.random()*300)));
+        	Math.random()*screenWidth,LastFloorHeigh+200+(Math.random()*300)));
+        console.log("random");
     },
     update: function(dt){
-    	if(scrollLayer.player.onTheMid()){
-	    	this.setPosition( new cc.Point( 0, this.getPosition().y+scrollLayer.player.G) );
-	    	this.LastFloorHeigh += scrollLayer.player.G;
+    	if(this.player.onTheMid()){
+	    	this.setPosition( new cc.Point( 0, this.getPosition().y+this.player.G) );
     	}
 
-    	if ((this.LastFloorHeigh < scrollLayer.player.pos.y+400) && (Math.random()*100>90))
-    		this.randomNormalFloor();
+    	if ((this.LastFloorHeigh-400 < this.player.pos.y)){
+    		if (Math.random()*100>98)
+  	    		this.randomNormalFloor();
+    	}
+    	else
+    		console.log("Player y :"+this.player.pos.y + " Last :"+this.LastFloorHeigh);
     },
 });
-scrollLayer.FallLimit = -15;
-scrollLayer.G = -0.5;
-scrollLayer.vy = 0;
-scrollLayer.player = null;
