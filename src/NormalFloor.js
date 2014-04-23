@@ -18,7 +18,6 @@ var NormalFloor = cc.Sprite.extend({
             this.layer.player.jump();
         if (this.myPos.y < 0){
         	this.layer.removeChild(this);
-        	console.log("removed");
         }
 
     },

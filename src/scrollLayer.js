@@ -18,19 +18,14 @@ var scrollLayer = cc.LayerColor.extend({
     },
     randomNormalFloor: function() {
         this.createNormalFloor(new cc.Point( 
-        	Math.random()*screenWidth,LastFloorHeigh+200+(Math.random()*300)));
-        console.log("random");
+        	Math.random()*screenWidth,LastFloorHeigh+100+(Math.random()*300)));
     },
     update: function(dt){
     	if(this.player.onTheMid()){
 	    	this.setPosition( new cc.Point( 0, this.getPosition().y+this.player.G) );
     	}
 
-    	if ((this.LastFloorHeigh-400 < this.player.pos.y)){
-    		if (Math.random()*100>98)
+    	if ((this.LastFloorHeigh-400 < this.player.pos.y)&&(Math.random()*100>98))
   	    		this.randomNormalFloor();
-    	}
-    	else
-    		console.log("Player y :"+this.player.pos.y + " Last :"+this.LastFloorHeigh);
     },
 });
