@@ -1,6 +1,5 @@
 var screenWidth =800;
-var screenHeight = 600;
-var LastFloorHeigh = 0;
+var screenHeight = 100000;
   
 var GameLayer = cc.LayerColor.extend({
     init: function() {
@@ -20,7 +19,7 @@ var GameLayer = cc.LayerColor.extend({
         this.scroll = new scrollLayer();
         this.scroll.init(this.player);
         this.addChild(this.scroll,1);
-
+        
         this.scheduleUpdate();
         return true;
     },
@@ -32,6 +31,9 @@ var GameLayer = cc.LayerColor.extend({
             break;
         case cc.KEY.right:
             this.player.Right();
+            break;
+        case 32:
+            this.player.jump();
             break;
         }
     },

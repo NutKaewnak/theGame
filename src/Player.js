@@ -7,47 +7,62 @@ var Player = cc.Sprite.extend({
 		animation.addSpriteFrameWithFile( 'images/dot.png' );
 		animation.addSpriteFrameWithFile( 'images/dot3.png' );
 		animation.setDelayPerUnit( 0.75 );
-		var movingAction = cc.Animate.create( animation );
-		this.runAction( movingAction );
+		this.runAction( cc.Animate.create( animation ) );
+
 		this.vy = 17;
 		this.vx = 0;
-		this.pos = this.getPosition();
+        this.high = 0;
 	},
 
 	update: function( dt ) {
-		if(this.vx<0){
-    		this.vx--;
-    	}
-    	if(this.vx>0){
-    		this.vx++;
-    	}
+        this.pos = this.getPosition();
 
-    	if (this.pos.x >800) this.setPosition(0,this.pos.y);
-    	else if (this.pos.x < 0) this.setPosition(800,this.pos.y);
+        this.accelerate();
+        this.swap();
 
 	    if (this.vy>Player.FallLimit)
 	    	this.vy +=  Player.G;
-	    if(this.onTheMid())
-	    	this.setPosition( new cc.Point( this.pos.x + this.vx, this.pos.y ) );
-	    else
-	    	this.setPosition( new cc.Point( this.pos.x + this.vx, this.pos.y + this.vy ) );
 
+	    if(this.onTheMid()){
+            this.setPosition( new cc.Point( this.pos.x+this.vx, this.pos.y ) );
+        }
+	    else{
+	    	this.setPosition( new cc.Point( this.pos.x+this.vx, this.pos.y+this.vy ));
+        }
     },
+
+    accelerate: function(){
+        if(this.vx<0)
+            this.Left();
+        if(this.vx>0)
+            this.Right();
+    },
+    swap: function(){
+        if (this.pos.x >800) 
+            this.setPosition(0,this.pos.y);
+        else if (this.pos.x < 0) 
+            this.setPosition(800,this.pos.y);
+    },
+
     onTheMid: function(){
-    	return (this.pos.y >=350 && this.vy>0);
+        return(this.pos.y >=350 && this.vy>0)
     },
     jump: function() {
     	if(this.vy > 0) return ;
+
         this.vy = Player.JUMPING_VELOCITY;
-        this.setPosition( new cc.Point( this.pos.x, this.pos.y + this.vy ) );
     },
     Left: function(){
-    	this.vx--;
+    	if (this.vx > -Player.VxMax)
+        	this.vx--;
     },
     Right: function(){
-    	this.vx++;
+    	if(this.vx < Player.VxMax)
+    		this.vx++;
     }
+
 });
 Player.G = -0.5;
 Player.JUMPING_VELOCITY = 15;
 Player.FallLimit = -15;
+Player.VxMax = 15;
