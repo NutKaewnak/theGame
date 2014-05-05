@@ -1,13 +1,16 @@
 var Player = cc.Sprite.extend({
 	ctor:function(){
 		this._super();
-		this.initWithFile('images/dot.png');
-		var animation = new cc.Animation.create();
-		animation.addSpriteFrameWithFile( 'images/dot1.png' );
-		animation.addSpriteFrameWithFile( 'images/dot.png' );
-		animation.addSpriteFrameWithFile( 'images/dot3.png' );
-		animation.setDelayPerUnit( 0.75 );
-		this.runAction( cc.Animate.create( animation ) );
+		this.animation = new cc.Animation.create();
+		this.animation.addSpriteFrameWithFile( 'images/Idle0.png' );
+        this.animation.addSpriteFrameWithFile( 'images/Idle1.png' );
+        this.animation.addSpriteFrameWithFile( 'images/Idle2.png' );
+        this.animation.addSpriteFrameWithFile( 'images/Idle3.png' );
+        this.animation.addSpriteFrameWithFile( 'images/Idle4.png' );
+        this.animation.addSpriteFrameWithFile( 'images/Idle5.png' );
+        this.animation.addSpriteFrameWithFile( 'images/Idle6.png' );
+		this.animation.setDelayPerUnit( 0.1 );
+		this.runAction( cc.Animate.create( this.animation ) );
 
 		this.vy = 17;
 		this.vx = 0;
@@ -29,6 +32,9 @@ var Player = cc.Sprite.extend({
 	    else{
 	    	this.setPosition( new cc.Point( this.pos.x+this.vx, this.pos.y+this.vy ));
         }
+
+
+        this.runAction( cc.Animate.create( this.animation ) );
     },
 
     accelerate: function(){

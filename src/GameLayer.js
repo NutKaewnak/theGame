@@ -20,11 +20,21 @@ var GameLayer = cc.LayerColor.extend({
         this.scroll.init(this.player);
         this.addChild(this.scroll,1);
         
+        this.Score = cc.LabelTTF.create( '0', 'Arial', 40 );
+        this.Score.setPosition( new cc.Point( 725, 550 ) );
+        this.Score.setString( this.scroll.high );
+        this.addChild(this.Score);
+
         this.scheduleUpdate();
         return true;
     },
 
+    update: function(dt){
+        this.Score.setString( Math.round(this.scroll.high) );
+    },
+
    onKeyDown: function( e ) {
+    console.log(e);
     switch( e ) {
         case cc.KEY.left:
             this.player.Left();
@@ -34,6 +44,9 @@ var GameLayer = cc.LayerColor.extend({
             break;
         case 32:
             this.player.jump();
+            break;
+        case 79:
+            this.player.vy = 100;
             break;
         }
     },
