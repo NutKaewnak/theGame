@@ -34,7 +34,6 @@ var GameLayer = cc.LayerColor.extend({
     },
 
    onKeyDown: function( e ) {
-    console.log(e);
     switch( e ) {
         case cc.KEY.left:
             this.player.Left();
@@ -47,6 +46,9 @@ var GameLayer = cc.LayerColor.extend({
             break;
         case 79:
             this.player.vy = 100;
+            break;
+        case 82:
+            this.player.vy = 50;
             break;
         }
     },

@@ -11,16 +11,17 @@ var scrollLayer = cc.LayerColor.extend({
     createNormalFloor: function(point) {
 
         var normalFloor = new NormalFloor(this,point);
+        scrollLayer.LastFloorHeigh = point.y;
         this.addChild(normalFloor);
         normalFloor.scheduleUpdate();
     },
     randomNormalFloor: function() {
-        this.createNormalFloor(new cc.Point(50+Math.random()*(screenWidth-100)
-                                    ,scrollLayer.LastFloorHeigh+Math.random()*100));
-        scrollLayer.LastFloorHeigh += Math.random()*100;
+        this.hard = Math.min( Math.floor(scrollLayer.LastFloorHeigh/200) , 350 );
+        this.createNormalFloor(new cc.Point( 50+Math.random()*(screenWidth-100)
+                                    ,scrollLayer.LastFloorHeigh+(Math.random()*100)+this.hard));
     },
     FushFloor: function(){
-        for(var i = 0; i < 99 ; i++){
+        for(var i = 0; i < 49 ; i++){
             this.randomNormalFloor();
         }
     },
@@ -31,8 +32,9 @@ var scrollLayer = cc.LayerColor.extend({
             scrollLayer.LastFloorHeigh = scrollLayer.LastFloorHeigh-this.player.vy;
             this.high += this.player.vy;
     	}
-    	if (scrollLayer.LastFloorHeigh-2000 < this.player.pos.y)
+    	if (scrollLayer.LastFloorHeigh-1000 < this.player.pos.y)
   	    	this.FushFloor();
+
     },
 });
 scrollLayer.LastFloorHeigh = 0;

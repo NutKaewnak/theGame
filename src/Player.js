@@ -9,7 +9,7 @@ var Player = cc.Sprite.extend({
         this.animation.addSpriteFrameWithFile( 'images/Idle4.png' );
         this.animation.addSpriteFrameWithFile( 'images/Idle5.png' );
         this.animation.addSpriteFrameWithFile( 'images/Idle6.png' );
-		this.animation.setDelayPerUnit( 0.075 );
+		this.animation.setDelayPerUnit( 0.06 );
         this.runAction(cc.RepeatForever.create( cc.Animate.create( this.animation )));
         
         this.setAnchorPoint(cc.PointMake(0.5,0));
@@ -58,7 +58,6 @@ var Player = cc.Sprite.extend({
     	if(this.vy > 0) return ;
 
         this.vy = Player.JUMPING_VELOCITY;
-        console.log(this.pos.x + " " + this.pos.y);
     },
     Left: function(){
     	if (this.vx > -Player.VxMax)
