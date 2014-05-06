@@ -1,22 +1,15 @@
 var Player = cc.Sprite.extend({
 	ctor:function(){
 		this._super();
-		this.animation = new cc.Animation.create();
-		this.animation.addSpriteFrameWithFile( 'images/Idle0.png' );
-        this.animation.addSpriteFrameWithFile( 'images/Idle1.png' );
-        this.animation.addSpriteFrameWithFile( 'images/Idle2.png' );
-        this.animation.addSpriteFrameWithFile( 'images/Idle3.png' );
-        this.animation.addSpriteFrameWithFile( 'images/Idle4.png' );
-        this.animation.addSpriteFrameWithFile( 'images/Idle5.png' );
-        this.animation.addSpriteFrameWithFile( 'images/Idle6.png' );
-		this.animation.setDelayPerUnit( 0.06 );
-        this.runAction(cc.RepeatForever.create( cc.Animate.create( this.animation )));
-        
+        this.AnimateFalling();
         this.setAnchorPoint(cc.PointMake(0.5,0));
 
-		this.vy = 17;
+		this.vy = 0;
 		this.vx = 0;
         this.high = 0;
+        this.animatedMid = false;
+        this.animatedFalling = false;
+        this.jump();
 	},
 
 	update: function( dt ) {
@@ -24,18 +17,18 @@ var Player = cc.Sprite.extend({
 
         this.accelerate();
         this.swap();
-
-	    if (this.vy>Player.FallLimit)
+	    if (this.vy > Player.FallLimit)
 	    	this.vy +=  Player.G;
+        if (this.vy < 0 && !this.animatedFalling)
+            this.AnimateFalling();
 
-	    if(this.onTheMid()){
-            this.setPosition( new cc.Point( this.pos.x+this.vx, this.pos.y ) );
+	    if (this.onTheMid()) {
+            this.setPosition( new cc.Point( this.pos.x+this.vx, this.pos.y ) );     
+            if(!this.animatedMid)
+                this.AnimateOnMid();
         }
-	    else{
+	    else
 	    	this.setPosition( new cc.Point( this.pos.x+this.vx, this.pos.y+this.vy ));
-        }
-
-        
     },
 
     accelerate: function(){
@@ -56,8 +49,8 @@ var Player = cc.Sprite.extend({
     },
     jump: function() {
     	if(this.vy > 0) return ;
-
         this.vy = Player.JUMPING_VELOCITY;
+        this.AnimateJump();
     },
     Left: function(){
     	if (this.vx > -Player.VxMax)
@@ -66,8 +59,45 @@ var Player = cc.Sprite.extend({
     Right: function(){
     	if(this.vx < Player.VxMax)
     		this.vx++;
-    }
+    },
 
+    AnimateJump: function(){
+        var animation = new cc.Animation.create();
+        animation.addSpriteFrameWithFile( 'images/Jump0.png' );
+        animation.addSpriteFrameWithFile( 'images/Jump0.png' );
+        animation.addSpriteFrameWithFile( 'images/Jump1.png' );
+        animation.addSpriteFrameWithFile( 'images/Jump2.png' );
+        animation.addSpriteFrameWithFile( 'images/Jump3.png' );
+        animation.addSpriteFrameWithFile( 'images/Jump2.png' );
+        animation.addSpriteFrameWithFile( 'images/Jump3.png' );
+        animation.addSpriteFrameWithFile( 'images/Jump2.png' );
+        animation.addSpriteFrameWithFile( 'images/Jump3.png' );
+        animation.setDelayPerUnit( 0.05 );
+        this.runAction(cc.Animate.create( animation ));
+    },
+
+    AnimateOnMid: function(){
+        var animation = new cc.Animation.create();
+        animation.addSpriteFrameWithFile( 'images/OnMid0.png' );
+        animation.addSpriteFrameWithFile( 'images/OnMid1.png' );
+        animation.addSpriteFrameWithFile( 'images/OnMid2.png' );
+        animation.setDelayPerUnit( 0.075 );
+        this.runAction( cc.Animate.create( animation ));
+        this.animatedMid = true;
+        this.animatedFalling = false;
+    },
+    AnimateFalling: function(){
+        var animation = new cc.Animation.create();
+        animation.addSpriteFrameWithFile( 'images/Falling0.png' );
+        animation.addSpriteFrameWithFile( 'images/Falling1.png' );
+        animation.addSpriteFrameWithFile( 'images/Falling2.png' );
+        animation.addSpriteFrameWithFile( 'images/Falling3.png' );
+        animation.addSpriteFrameWithFile( 'images/Falling4.png' );
+        animation.setDelayPerUnit( 0.075 );
+        this.runAction(cc.Animate.create( animation ));
+        this.animatedFalling = true;
+        this.animatedMid = false;
+    },
 });
 Player.G = -0.5;
 Player.JUMPING_VELOCITY = 15;
