@@ -3,11 +3,13 @@ var NormalFloor = cc.Sprite.extend({
         this._super();
         this.initWithFile('images/normalFloor.png');
         this.layer = layer;
+        this.width = 81+40;
+        this.height = 15;
         this.setPosition(point);
     },
     closeTo: function( obj ) {
 		var oPos = obj.getPosition();
-	  	return ((Math.abs(this.myPos.x-oPos.x) <= 30) && (Math.abs(oPos.y-this.myPos.y) <= 15));
+	  	return ((Math.abs(this.myPos.x-oPos.x) <= (this.width/2)) && (Math.abs(oPos.y-this.myPos.y) <= (this.height/2)));
     },
     update: function( dt ) {
     	this.myPos = this.getPosition();
