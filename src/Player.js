@@ -9,28 +9,33 @@ var Player = cc.Sprite.extend({
         this.high = 0;
         this.animatedMid = false;
         this.animatedFalling = false;
+        this.OnRight = true;
+        this.dJumped = false;
+
         this.jump();
 	},
 
 	update: function( dt ) {
         this.pos = this.getPosition();
+        this.setFlippedX(this.OnRight);
 
         this.accelerate();
         this.swap();
-	    if (this.vy > Player.FallLimit)
-	    	this.vy +=  Player.G;
-        if (this.vy < 0 && !this.animatedFalling)
-            this.AnimateFalling();
+        this.Falling();
 
-	    if (this.onTheMid()) {
-            this.setPosition( new cc.Point( this.pos.x+this.vx, this.pos.y ) );     
-            if(!this.animatedMid)
-                this.AnimateOnMid();
-        }
+	    if (this.onTheMid())
+            this.setPosition( new cc.Point( this.pos.x+this.vx, this.pos.y ) );
 	    else
 	    	this.setPosition( new cc.Point( this.pos.x+this.vx, this.pos.y+this.vy ));
     },
 
+
+    Falling: function(){
+        if (this.vy > Player.FallLimit)
+            this.vy +=  Player.G;
+        if (this.vy < 0)
+            this.AnimateFalling();
+    },
     accelerate: function(){
         if(this.vx<0)
             this.Left();
@@ -43,57 +48,77 @@ var Player = cc.Sprite.extend({
         else if (this.pos.x < 0) 
             this.setPosition(800,this.pos.y);
     },
-
     onTheMid: function(){
-        return(this.pos.y >=350 && this.vy>0)
+        if (this.pos.y >=450 && this.vy>0){
+            this.AnimateOnMid();
+            return true;
+        }
+        return false;
     },
     jump: function() {
     	if(this.vy > 0) return ;
         this.vy = Player.JUMPING_VELOCITY;
         this.AnimateJump();
     },
+    doubleJump: function(){
+        if (this.dJumped) return;
+        this.vy = Player.JUMPING_VELOCITY+5;
+        this.AnimateJump();
+        this.dJumped = true;
+    },
     Left: function(){
     	if (this.vx > -Player.VxMax)
         	this.vx--;
+        this.OnRight = true;
     },
     Right: function(){
     	if(this.vx < Player.VxMax)
     		this.vx++;
+        this.OnRight = false;
     },
+
 
     AnimateJump: function(){
         var animation = new cc.Animation.create();
         animation.addSpriteFrameWithFile( 'images/Jump0.png' );
-        animation.addSpriteFrameWithFile( 'images/Jump0.png' );
         animation.addSpriteFrameWithFile( 'images/Jump1.png' );
         animation.addSpriteFrameWithFile( 'images/Jump2.png' );
         animation.addSpriteFrameWithFile( 'images/Jump3.png' );
-        animation.addSpriteFrameWithFile( 'images/Jump2.png' );
-        animation.addSpriteFrameWithFile( 'images/Jump3.png' );
-        animation.addSpriteFrameWithFile( 'images/Jump2.png' );
-        animation.addSpriteFrameWithFile( 'images/Jump3.png' );
-        animation.setDelayPerUnit( 0.05 );
+        animation.setDelayPerUnit( 0.075 );
         this.runAction(cc.Animate.create( animation ));
+        this.animatedMid = false;
+        this.animatedFalling = false;
     },
 
     AnimateOnMid: function(){
+        if (this.animatedMid) return;
         var animation = new cc.Animation.create();
         animation.addSpriteFrameWithFile( 'images/OnMid0.png' );
         animation.addSpriteFrameWithFile( 'images/OnMid1.png' );
         animation.addSpriteFrameWithFile( 'images/OnMid2.png' );
-        animation.setDelayPerUnit( 0.075 );
+        animation.addSpriteFrameWithFile( 'images/OnMid0.png' );
+        animation.addSpriteFrameWithFile( 'images/OnMid1.png' );
+        animation.addSpriteFrameWithFile( 'images/OnMid2.png' );
+        animation.addSpriteFrameWithFile( 'images/OnMid0.png' );
+        animation.addSpriteFrameWithFile( 'images/OnMid1.png' );
+        animation.addSpriteFrameWithFile( 'images/OnMid2.png' );
+        animation.setDelayPerUnit( 0.07 );
         this.runAction( cc.Animate.create( animation ));
         this.animatedMid = true;
         this.animatedFalling = false;
     },
     AnimateFalling: function(){
+        if (this.animatedFalling) return;
         var animation = new cc.Animation.create();
         animation.addSpriteFrameWithFile( 'images/Falling0.png' );
         animation.addSpriteFrameWithFile( 'images/Falling1.png' );
         animation.addSpriteFrameWithFile( 'images/Falling2.png' );
+        animation.addSpriteFrameWithFile( 'images/Falling2.png' );
+        animation.addSpriteFrameWithFile( 'images/Falling3.png' );
         animation.addSpriteFrameWithFile( 'images/Falling3.png' );
         animation.addSpriteFrameWithFile( 'images/Falling4.png' );
-        animation.setDelayPerUnit( 0.075 );
+        animation.addSpriteFrameWithFile( 'images/Falling4.png' );
+        animation.setDelayPerUnit( 0.06 );
         this.runAction(cc.Animate.create( animation ));
         this.animatedFalling = true;
         this.animatedMid = false;

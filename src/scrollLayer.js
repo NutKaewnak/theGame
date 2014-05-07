@@ -3,11 +3,12 @@ var scrollLayer = cc.LayerColor.extend({
         this.setPosition( new cc.Point( 0, 0 ) );
         this.player = obj;
         this.createNormalFloor(new cc.Point( screenWidth / 2, 60 ));
+
         this.high = 0;
         this.FushFloor();
         this.scheduleUpdate();
-        return true;
     },
+
     createNormalFloor: function(point) {
 
         var normalFloor = new NormalFloor(this,point);
@@ -16,15 +17,17 @@ var scrollLayer = cc.LayerColor.extend({
         normalFloor.scheduleUpdate();
     },
     randomNormalFloor: function() {
-        this.hard = Math.min( Math.floor(scrollLayer.LastFloorHeigh/200) , 350 );
+        this.hard = Math.min( Math.floor(this.high/100)+Math.random()*50 , 180 );
+
         this.createNormalFloor(new cc.Point( 50+Math.random()*(screenWidth-100)
-                                    ,scrollLayer.LastFloorHeigh+(Math.random()*100)+this.hard));
+                                    ,scrollLayer.LastFloorHeigh+this.hard));
     },
     FushFloor: function(){
         for(var i = 0; i < 49 ; i++){
             this.randomNormalFloor();
         }
     },
+
     update: function(dt){
         scrollLayer.FallSpeed = -this.player.vy;
     	if(this.player.onTheMid()){

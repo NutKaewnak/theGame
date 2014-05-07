@@ -4,9 +4,9 @@ var screenHeight = 100000;
 var GameLayer = cc.LayerColor.extend({
     init: function() {
         this._super();
-        var background = cc.Sprite.create('images/story-fairy-space-mystic.jpg');
+        var background = cc.Sprite.create('images/background.jpg');
         background.setAnchorPoint( cc.p( 0.5, 0.5 ));
-        background.setPosition( cc.p( 400, 300) );
+        background.setPosition( cc.p( 500, 500) );
         this.addChild(background);
 
         this.setPosition( new cc.Point( 0, 0 ) );
@@ -21,7 +21,7 @@ var GameLayer = cc.LayerColor.extend({
         this.addChild(this.scroll,1);
         
         this.Score = cc.LabelTTF.create( '0', 'Arial', 40 );
-        this.Score.setPosition( new cc.Point( 725, 550 ) );
+        this.Score.setPosition( new cc.Point( 725, 900 ) );
         this.Score.setString( this.scroll.high );
         this.addChild(this.Score);
 
@@ -42,7 +42,7 @@ var GameLayer = cc.LayerColor.extend({
             this.player.Right();
             break;
         case 32:
-            this.player.jump();
+            this.player.doubleJump();
             break;
         case 79:
             this.player.vy = 100;
