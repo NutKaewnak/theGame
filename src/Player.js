@@ -1,9 +1,10 @@
 var Player = cc.Sprite.extend({
-	ctor:function(){
+	ctor:function(layer){
 		this._super();
         this.AnimateFalling();
         this.setAnchorPoint(cc.PointMake(0.5,0));
-
+        this.AddStone();
+        
 		this.vy = 0;
 		this.vx = 0;
         this.high = 0;
@@ -11,6 +12,8 @@ var Player = cc.Sprite.extend({
         this.animatedFalling = false;
         this.OnRight = true;
         this.dJumped = false;
+        this.layer = layer;
+        this.pos = this.getPosition();
 
         this.jump();
 	},
@@ -59,6 +62,7 @@ var Player = cc.Sprite.extend({
     	if(this.vy > 0) return ;
         this.vy = Player.JUMPING_VELOCITY;
         this.AnimateJump();
+        this.dJumped = false;
     },
     doubleJump: function(){
         if (this.dJumped) return;
@@ -77,6 +81,20 @@ var Player = cc.Sprite.extend({
         this.OnRight = false;
     },
 
+    AddStone: function(){
+        this.oStone = [];
+        for(var i = 0 ; i < 2 ; i++){
+            this.oStone[i] = new OStone(this,Math.PI*i);
+            this.addChild(this.oStone[i]);
+        }
+    },
+    Shoot: function(){
+        if (Math.random()*1000 < 950-(this.high/500)) return;
+        this.layer.pShoot(new cc.Point( this.pos.x+this.oStone[0].pos.x
+                                    , this.pos.y+this.oStone[0].pos.y ));
+        this.layer.pShoot(new cc.Point( this.pos.x+this.oStone[1].pos.x
+                                    , this.pos.y+this.oStone[1].pos.y ));
+    },
 
     AnimateJump: function(){
         var animation = new cc.Animation.create();

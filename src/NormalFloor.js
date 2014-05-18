@@ -5,8 +5,8 @@ var NormalFloor = cc.Sprite.extend({
         this.layer = layer;
         this.width = 81+30;
         this.height = 15;
-        this.myPos = this.getPosition();
         this.setPosition(point);
+        this.myPos = this.getPosition();
     },
     closeTo: function( obj ) {
 		var oPos = obj.getPosition();
@@ -18,7 +18,6 @@ var NormalFloor = cc.Sprite.extend({
         	this.setPosition(this.myPos.x,this.myPos.y-this.layer.player.vy);
         if (this.closeTo( this.layer.player )){
             this.layer.player.jump();    
-            this.layer.player.dJumped = false;
         }
         if (this.myPos.y < 0)
         	this.layer.removeChild(this);

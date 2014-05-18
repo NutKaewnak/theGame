@@ -15,7 +15,11 @@
             'src/GameLayer.js' ,
             'src/Player.js',
             'src/NormalFloor.js',
-            'src/scrollLayer.js'//add your own files in order here
+            'src/scrollLayer.js',
+            'src/OStone.js',
+            'src/Bullet.js',
+            'src/Ball.js',
+            'src/Gameover.js',//add your own files in order here
         ]
     };
 

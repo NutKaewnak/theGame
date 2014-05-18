@@ -17,7 +17,7 @@ var scrollLayer = cc.LayerColor.extend({
         normalFloor.scheduleUpdate();
     },
     randomNormalFloor: function() {
-        this.hard = Math.min( Math.floor(this.high/100)+Math.random()*50 , 180 );
+        this.hard = 60+Math.min( Math.floor(this.high/100)+Math.random()*50 , 180 );
 
         this.createNormalFloor(new cc.Point( 50+Math.random()*(screenWidth-100)
                                     ,scrollLayer.LastFloorHeigh+this.hard));
